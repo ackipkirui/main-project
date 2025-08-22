@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Single-Page Website</title>
+<style>
+  /* General Styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+
+  header nav {
+    background-color: #3498db;
+    padding: 10px;
+    text-align: center;
+  }
+
+  header nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  header nav a:hover {
+    text-decoration: underline;
+  }
+
+  section {
+    padding: 20px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #eee;
+    margin-top: 20px;
+  }
+
+  /* Button Styles */
+  button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+  }
+
+  button:hover {
+    transform: scale(1.1);
+    background-color: #27ae60;
+  }
+
+  /* Box Animation */
+  #box {
+    width: 100px;
+    height: 100px;
+    background-color: #e74c3c;
+    margin: 20px 0;
+    transition: transform 1s, background-color 1s;
+  }
+
+  /* Card Flip */
+  .card-container {
+    perspective: 1000px;
+    width: 150px;
+    height: 200px;
+    margin: 20px auto;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    cursor: pointer;
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card .front, .card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+  }
+
+  .card .front {
+    background-color: #3498db;
+  }
+
+  .card .back {
+    background-color: #e67e22;
+    transform: rotateY(180deg);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    header nav a {
+      display: block;
+      margin: 5px 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home">
+  <h1>Welcome to My Interactive Site</h1>
+  <p>This is a single-page website with interactive features.</p>
+  <button id="welcomeBtn">Click Me!</button>
+
+  <h2>Animated Box</h2>
+  <div id="box"></div>
+  <button onclick="animateBox('move')">Move Box</button>
+  <button onclick="animateBox('rotate')">Rotate Box</button>
+</section>
+
+<section id="about">
+  <h1>About Us</h1>
+  <p>This section gives information about the website or developer.</p>
+
+  <div class="card-container">
+    <div class="card" onclick="flipCard(this)">
+      <div class="front">Front</div>
+      <div class="back">Back</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h1>Contact Us</h1>
+  <form id="contactForm">
+    <label>
+      Name:
+      <input type="text" id="name" required>
+    </label><br><br>
+    <label>
+      Email:
+      <input type="email" id="email" required>
+    </label><br><br>
+    <label>
+      Message:
+      <textarea id="message" required></textarea>
+    </label><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="formFeedback"></p>
+</section>
+
+<footer>
+  <p>&copy; 2025 My Website</p>
+</footer>
+
+<script>
+  // Welcome button
+  const welcomeBtn = document.getElementById('welcomeBtn');
+  welcomeBtn.addEventListener('click', () => alert('Welcome to my website!'));
+
+  // Animate Box
+  function animateBox(action) {
+    const box = document.getElementById('box');
+    if (action === 'move') {
+      box.style.transform = 'translateX(200px)';
+      box.style.backgroundColor = '#2ecc71';
+    } else if (action === 'rotate') {
+      box.style.transform = 'rotate(360deg)';
+    }
+  }
+
+  // Card Flip
+  function flipCard(cardElement) {
+    cardElement.classList.toggle('flipped');
+  }
+
+  // Contact form validation
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const feedback = document.getElementById('formFeedback');
+
+    if (name && email && message) {
+      feedback.textContent = 'Form submitted successfully!';
+      feedback.style.color = 'green';
+      contactForm.reset();
+    } else {
+      feedback.textContent = 'Please fill in all fields.';
+      feedback.style.color = 'red';
+    }
+  });
+</script>
+
+</body>
+</html>
